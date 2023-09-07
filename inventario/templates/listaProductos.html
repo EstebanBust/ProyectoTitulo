@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block content%}
+<main class="container">
+  <div class="row">
+    <h1>Productos</h1>
+    <div class="col-md-6 offset-md-3">
+      <form method="POST" action="{% url 'busca_productos' %}">
+        {% csrf_token %}
+        <label for="categoria">Selecciona una categoría:</label>
+        <select name="categoria" id="categoria">
+          <option value="nombre">Nombre</option>
+          <option value="tipo">Tipo</option>
+          <option value="proveedor">Proveedor</option>
+          <!-- Agrega más opciones de categoría según tus necesidades -->
+        </select>
+        <input
+          type="text"
+          name="imput"
+          id="imput"
+          class="form-control"
+          placeholder="Escribe aquí..."
+        />
+        <button type="submit">Buscar</button>
+      </form>
+      <ul class="list-group">
+        {% for producto in productos %}
+        <a class="list-group-item" href="{% url 'mostrar_producto' producto.id %}">
+          {{producto}}
+        </a>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</main>
+{% endblock %}

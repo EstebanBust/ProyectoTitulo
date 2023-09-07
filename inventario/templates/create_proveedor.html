@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content%}
+<div class="container">
+  <h1>Crear Proveedor</h1>
+  {{error}}
+  <form action="{% url 'create_proveedor' %}" method="POST">
+    {% csrf_token %} {{form.as_p}}
+    <button>Guardar Proveedor</button>
+  </form>
+</div>
+{% endblock %}

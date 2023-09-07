@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content%}
+<h1>Detalle Proveedor</h1>
+<ul>
+  <li><strong style="text-transform: uppercase;">{{proveedor.nombre}}</strong></li>
+  <form method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button >Editar</button>
+  </form>
+  <form action="{% url 'delete_proveedor' proveedor.id %}" method="POST" onsubmit="return confirmarBorrado();">
+    {% csrf_token %}
+    <button type="submit">Borrar</button>
+  </form>
+</ul>
+<script>
+  function confirmarBorrado() {
+    if (confirm("¿Estás seguro de que deseas borrar este proveedor?")) {
+      return true;  // Continuar con la eliminación
+    } else {
+      return false; // Cancelar la eliminación
+    }
+  }
+  </script>
+{% endblock %}

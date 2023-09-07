@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content%}
+<div class="container">
+    <div class="card"><h1>Frutillita E-Commerce</h1>
+    <p>Emprendimiento ficticio, Proyecto de titulo de Esteban Bustamante Catalan, para instituto IACC. 2023 la carrera de Tecnico nivel superior en analisis y programacion computacional, escuela de tecnologias aplicadas. Inventario web desarrollado en Django mediante el lenguaje Python, incluye las tablas de productos, clientes y proveedores, ademas un registro de gastos. Idealmente se completara con un E-comerce completamente funcional si es posible terminarlo antes de la fecha de entrega del proyecto. </p>
+    <div class="text-center"><a class="btn btn-primary" href="{% url 'signin' %}">Login</a>
+        <a class="btn btn-success" href="{% url 'signup' %}">Registro</a></div>
+    </div>
+</div>
+<div class="container"></div>
+
+{% endblock %}

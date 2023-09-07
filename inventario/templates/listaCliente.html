@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content%}
+<h1>Clientes</h1>
+<form method="POST" action="{% url 'busca_cliente' %}">
+    {% csrf_token %}
+    <label for="categoria">Selecciona una categoría:</label>
+    <select name="categoria" id="categoria">
+      <option value="nombre">Nombre</option>
+      <option value="rut">Rut</option>      
+      <!-- Agrega más opciones de categoría según tus necesidades -->
+    </select>
+    <input type="text" name="imput" id="imput" placeholder="Escribe aquí...">
+    <button type="submit">Buscar</button>
+  </form>
+<ul>
+  {% for cliente in clientes %}
+    <a href="{% url 'mostrar_cliente' cliente.id %}">
+    <li>{{cliente}}</li>
+  </a>  
+  {% endfor %}
+</ul>
+{% endblock %}

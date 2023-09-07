@@ -1,0 +1,11 @@
+.body_BGC{background-color: aqua;}
+p{padding: 20px;}
+h1{text-align: center;}
+.card{padding: 20px;}
+.container{padding: 10px;}
+footer{padding: 20px;}
+ul {
+    list-style-type: none; /* Elimina las viñetas */
+    padding: 0; /* Elimina el relleno (padding) predeterminado de la lista */
+    margin: 0; /* Elimina el margen predeterminado de la lista */
+}

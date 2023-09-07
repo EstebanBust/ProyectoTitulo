@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content%}
+<main class="container">
+  <div class="row">
+    <h1>Proveedor</h1>
+    <div class="col-md-6 offset-md-3">
+      <form method="POST" action="{% url 'busca_proveedor' %}" class="card text-center">
+        {% csrf_token %}
+        <div class="row"><label for="categoria">Selecciona una categoría:</label>
+          <select class="form-select w-25" name="categoria" id="categoria">
+            <option value="nombre">Nombre</option>
+            <option value="rubro">Rubro</option>
+            <option value="rut">Rut</option>
+            <!-- Agrega más opciones de categoría según tus necesidades -->
+          </select>
+          <input type="text" name="imput" id="imput" placeholder="Escribe aquí..." class="form-control w-75"></div>
+          <div class="text-center"> <!-- Agregamos un div para centrar el botón -->
+            <button class="btn btn-primary">Buscar</button>
+        </div>
+      </form>
+    <ul class="list-group">
+      {% for proveedor in proveedores %}
+      <a class="list-group-item  m-2" href="{% url 'mostrar_proveedor' proveedor.id %}"><li>{{proveedor}}</li></a>
+      {% endfor %}
+    </ul>
+    </div>
+  </div>
+</main>
+{% endblock %}
