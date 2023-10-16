@@ -61,9 +61,6 @@ def signin(request):
             login(request, user)
             return redirect('home')
 
-
-
-
 #insertar registros
 @login_required
 def create_proveedor(request):
