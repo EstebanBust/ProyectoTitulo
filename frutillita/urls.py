@@ -38,4 +38,7 @@ urlpatterns = [
     path('req/buscaProducto/mostrarProveedor/<int:proveedor_id>/delete', views.deleteProveedor, name='delete_proveedor'),
     path('req/buscaProducto/mostrarProducto/<int:producto_id>/delete', views.deleteProducto, name='delete_producto'),
     path('req/buscaProducto/mostrarCliente/<int:cliente_id>/delete', views.deleteCliente, name='delete_cliente'),
+    path('caja/', views.caja, name='caja'),
+    path('caja/detalle/<int:caja_id>/', views.detalle_caja, name='detalle_caja'),
+    path('caja/crear_flujo_de_caja', views.caja, name='crear_flujo_caja'),
 ]

@@ -3,8 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
-from .forms import CrearProvForm, CrearProductoForm, CrearClienteForm
-from .models import Producto, Proveedor, Cliente
+from .forms import CrearProvForm, CrearProductoForm, CrearClienteForm, FlujoCajaForm
+from .models import Producto, Proveedor, Cliente, FlujoCaja
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -28,7 +28,7 @@ def signup(request):
             try:
                 # registrar usuario
                 user = User.objects.create_user(
-                    username=request.POST['username'], password=request.POST['password1'])
+                    username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
                 return redirect('req')
@@ -212,3 +212,25 @@ def deleteCliente(request, cliente_id):
     if request.method == 'POST':
         cliente.delete()
         return redirect('req')
+
+@login_required
+def caja(request):
+    flujo_de_caja = FlujoCaja.objects.all()
+    saldo_actual = FlujoCaja.objects.last()
+    
+    if request.method == 'POST':
+        form = FlujoCajaForm(request.POST)
+        if form.is_valid():
+            flujo_caja = form.save(commit=False)
+            flujo_caja.request_user = request.user  # Asigna el usuario actual
+            flujo_caja.save()
+    else:
+        form = FlujoCajaForm()
+    
+    return render(request, 'flujo_de_caja.html', {'flujo_de_cajas': flujo_de_caja, 'form': form, 'saldo_actual':saldo_actual})
+
+def detalle_caja(request, caja_id):
+    flujo_de_caja = FlujoCaja.objects.get(id=caja_id)
+    return render(request,'detalle_caja.html', {'flujo_de_caja': flujo_de_caja})
+
+

@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content%}
+<div class="container">
+    <h1>Flujo de caja</h1>
+    <div class="row"><div class="col text-center"><h2>Saldo Actual: {{saldo_actual.saldo_actual}}</h2></div></div>
+    <div class="row">
+        <div class="col">
+            {% for flujo_de_caja in flujo_de_cajas %}
+            <div class="card">
+                <a href="{% url 'detalle_caja' flujo_de_caja.id %}">
+                    <ul>
+                        <li>Concepto: {{flujo_de_caja.concepto}}</li>
+                        <li>Tipo: {{flujo_de_caja.tipo_transaccion}}</li>
+                        <li>Monto: {{flujo_de_caja.monto}}</li>
+                    </ul>
+        
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <form method="POST" action="{% url 'crear_flujo_caja' %}">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">Buscar</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

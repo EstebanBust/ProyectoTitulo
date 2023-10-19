@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Proveedor,Cliente,Producto
+from .models import Proveedor,Cliente,Producto,FlujoCaja
 
 class CrearProvForm(ModelForm):
     class Meta:
@@ -15,3 +15,8 @@ class CrearProductoForm(ModelForm):
     class Meta:
         model = Producto
         fields = ['nombre','marca', 'tipo', 'descripcion', 'cantidad', 'proveedor']
+
+class FlujoCajaForm(ModelForm):
+    class Meta:
+        model= FlujoCaja
+        fields = ['concepto', 'tipo_transaccion', 'monto','saldo_actual']
