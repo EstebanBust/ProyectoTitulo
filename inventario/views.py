@@ -86,7 +86,8 @@ def create_cliente(request):
 @login_required
 def create_producto(request):
     if request.method == 'GET':
-        return render(request, 'create_producto.html', {'form': CrearProductoForm()})
+        proveedores = Proveedor.objects.all()
+        return render(request, 'create_producto.html', {'form': CrearProductoForm(),'proveedores':proveedores})
 
     else:
         form = CrearProductoForm(request.POST)
@@ -102,7 +103,7 @@ def busca_producto(request):
         imput = request.POST.get('imput')
         # Filtra los productos según la categoría seleccionada
         if categoria:
-            productos = Producto.objects.filter(Q(**{categoria: imput}))
+            productos = Producto.objects.filter(Q(**{f'{categoria}__icontains': imput}))
         else:
             # Si no se selecciona una categoría, muestra todos los productos
             productos = Producto.objects.all()
@@ -121,7 +122,7 @@ def busca_proveedor(request):
 
         # Filtra los productos según la categoría seleccionada
         if categoria:
-            proveedor = Proveedor.objects.filter(Q(**{categoria: imput}))
+            proveedor = Proveedor.objects.filter(Q(**{f'{categoria}__icontains': imput}))
 
         else:
             # Si no se selecciona una categoría, muestra todos los proveedor
@@ -141,7 +142,7 @@ def busca_cliente(request):
 
         # Filtra los productos según la categoría seleccionada
         if categoria:
-            cliente = Cliente.objects.filter(Q(**{categoria: imput}))
+            cliente = Cliente.objects.filter(Q(**{f'{categoria}__icontains': imput}))
 
         else:
             # Si no se selecciona una categoría, muestra todos los cliente

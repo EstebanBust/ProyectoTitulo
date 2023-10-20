@@ -3,23 +3,20 @@
   <div class="row">
     <h1>Productos</h1>
     <div class="col-md-6 offset-md-3">
-      <form method="POST" action="{% url 'busca_productos' %}">
+      <form class="card text-center" method="POST" action="{% url 'busca_productos' %}">
         {% csrf_token %}
-        <label for="categoria">Selecciona una categoría:</label>
-        <select name="categoria" id="categoria">
-          <option value="nombre">Nombre</option>
-          <option value="tipo">Tipo</option>
-          <option value="proveedor">Proveedor</option>
-          <!-- Agrega más opciones de categoría según tus necesidades -->
-        </select>
-        <input
-          type="text"
-          name="imput"
-          id="imput"
-          class="form-control"
-          placeholder="Escribe aquí..."
-        />
-        <button type="submit">Buscar</button>
+        <div class="row"><label for="categoria">Selecciona una categoría:</label>
+          <select class="form-select w-25" name="categoria" id="categoria">
+            <option value="nombre">Nombre</option>
+            <option value="tipo">Tipo</option>
+            <option value="proveedor">Proveedor</option>
+            <!-- Agrega más opciones de categoría según tus necesidades -->
+          </select>
+          <input type="text" name="imput" id="imput" class="form-control" placeholder="Escribe aquí..." />
+          <div class="text-center">
+            <div class="btn btn-primary d-flex justify-content-center marg" type="submit">Buscar</div>
+          </div>
+        </div>
       </form>
       <ul class="list-group">
         {% for producto in productos %}

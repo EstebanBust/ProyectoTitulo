@@ -1,21 +1,30 @@
 {% extends 'base.html' %} {% block content%}
-<h1>Clientes</h1>
-<form method="POST" action="{% url 'busca_cliente' %}">
-    {% csrf_token %}
-    <label for="categoria">Selecciona una categoría:</label>
-    <select name="categoria" id="categoria">
-      <option value="nombre">Nombre</option>
-      <option value="rut">Rut</option>      
-      <!-- Agrega más opciones de categoría según tus necesidades -->
-    </select>
-    <input type="text" name="imput" id="imput" placeholder="Escribe aquí...">
-    <button type="submit">Buscar</button>
-  </form>
-<ul>
-  {% for cliente in clientes %}
-    <a href="{% url 'mostrar_cliente' cliente.id %}">
-    <li>{{cliente}}</li>
-  </a>  
-  {% endfor %}
-</ul>
+<main class="container">
+  <div class="row">
+    <h1>Clientes</h1>
+    <div class="col-md-6 offset-md-3">
+      <form class="card text-center" method="POST" action="{% url 'busca_cliente' %}">
+        {% csrf_token %}
+        <div class="row"><label for="categoria">Selecciona una categoría:</label>
+          <select class="form-select w-25" name="categoria" id="categoria">
+            <option value="nombre">Nombre</option>
+            <option value="rut">Rut</option>
+            <!-- Agrega más opciones de categoría según tus necesidades -->
+          </select>
+          <input class="form-control w-75" type="text" name="imput" id="imput" placeholder="Escribe aquí...">
+        </div>
+        <div class="text-center">
+          <div class="btn btn-primary d-flex justify-content-center marg"type="submit">Buscar</div>
+        </div>
+      </form>
+      <ul class="list-group">
+        {% for cliente in clientes %}
+        <a class="list-group-item" href="{% url 'mostrar_cliente' cliente.id %}">
+          <li >{{cliente}}</li>
+        </a>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</main>
 {% endblock %}
