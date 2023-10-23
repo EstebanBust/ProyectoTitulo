@@ -41,4 +41,6 @@ urlpatterns = [
     path('caja/', views.caja, name='caja'),
     path('caja/detalle/<int:caja_id>/', views.detalle_caja, name='detalle_caja'),
     path('caja/crear_flujo_de_caja', views.caja, name='crear_flujo_caja'),
+    path('caja/modificar_flujo_de_caja/<int:caja_id>', views.modificar_caja, name='modificar_flujo_caja'),
+    path('caja/borrar_Flujo_de_caja/<int:caja_id>', views.borrarCaja, name='borrar_flujo_caja'),
 ]

@@ -1,27 +1,58 @@
 {% extends 'base.html' %} {% block content%}
 <div class="container">
-    <h1>Flujo de caja</h1>
-    <div class="row"><div class="col text-center"><h2>Saldo Actual: {{saldo_actual.saldo_actual}}</h2></div></div>
+    <h1>Flujo de caja (en progreso)</h1>
+    <div class="row">
+        <div class="col text-center">
+            <h2>Saldo Actual: {{saldo_actual.saldo_actual}}</h2>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
-            {% for flujo_de_caja in flujo_de_cajas %}
-            <div class="card">
-                <a href="{% url 'detalle_caja' flujo_de_caja.id %}">
-                    <ul>
-                        <li>Concepto: {{flujo_de_caja.concepto}}</li>
-                        <li>Tipo: {{flujo_de_caja.tipo_transaccion}}</li>
-                        <li>Monto: {{flujo_de_caja.monto}}</li>
-                    </ul>
-        
-                </a>
-            </div>
-            {% endfor %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Tipo</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flujo_de_caja in flujo_de_cajas %}
+                    <tr>
+                        <td><a class="text-decoration-none text-reset"
+                                href="{% url 'detalle_caja' flujo_de_caja.id %}">{{ flujo_de_caja.concepto }}</a></td>
+                        <td class="{% if flujo_de_caja.tipo_transaccion == 'Ingreso' %}text-success {% else %} text-danger {% endif %}">{{ flujo_de_caja.tipo_transaccion }}</td>
+                        <td>{{ flujo_de_caja.monto }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <div class="col">
+        <div class="col bg-dark text-light text-center p-3 rounded">
+            <h2>Ingresar nuevo movimiento</h2>
             <form method="POST" action="{% url 'crear_flujo_caja' %}">
                 {% csrf_token %}
-                {{form.as_p}}
-                <button type="submit">Buscar</button>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="concepto" class="form-label w-25 m-1">Concepto:</label>
+                    <input type="text" class="form-control" id="concepto" name="concepto">
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="tipo_transaccion" class="form-label w-25 m-1">Tipo de transacción:</label>
+                    <select class="form-select" id="tipo_transaccion" name="tipo_transaccion">
+                        {% for choice in form.tipo_transaccion.field.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="monto" class="form-label w-25 m-1">Monto:</label>
+                    <input type="text" class="form-control" id="monto" name="monto">
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="saldo_actual" class="form-label w-25 m-1">Saldo Actual:</label>
+                    <input type="text" class="form-control" id="saldo_actual" name="saldo_actual">
+                </div>
+                <button class="btn btn-primary" type="submit">Buscar</button>
             </form>
 
         </div>

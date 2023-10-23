@@ -1,10 +1,35 @@
 {% extends 'base.html' %} {% block content%}
-<div class="container">
+<main class="container">
   <h1>Crear Proveedor</h1>
-  {{error}}
-  <form action="{% url 'create_proveedor' %}" method="POST">
-    {% csrf_token %} {{form.as_p}}
-    <button>Guardar Proveedor</button>
-  </form>
-</div>
+  <div class="row">
+    <div class="col bg-warning rounded p-3">
+      {{error}}
+      <form action="{% url 'create_proveedor' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre: </label>
+          <input type="text" class="form-control" id="nombre" name="nombre">
+        </div>
+        <div class="mb-3">
+          <label for="rut" class="form-label">Rut:</label>
+          <input type="text" class="form-control" id="rut" name="rut">
+        </div>
+        <div class="mb-3">
+          <label for="direccion" class="form-label">Direccion:</label>
+          <input type="text" class="form-control" id="direccion" name="direccion">
+        </div>
+        <div class="mb-3">
+          <label for="rubro" class="form-label">Rubro:</label>
+          <input type="text" class="form-control" id="rubro" name="rubro">
+        </div>
+        <div class="mb-3">
+          <label for="medioDePago" class="form-label">Medio de pago:</label>
+          <input type="text" class="form-control" id="medioDePago" name="medioDePago">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Proveedor</button>
+      </form>
+      
+    </div>
+  </div>
+</main>
 {% endblock %}

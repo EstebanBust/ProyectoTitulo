@@ -1,17 +1,39 @@
 {% extends 'base.html' %} {% block content%}
-<h1>Detalle Proveedor</h1>
-<ul>
-  <li><strong style="text-transform: uppercase;">{{proveedor.nombre}}</strong></li>
-  <form method='POST'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button >Editar</button>
-  </form>
-  <form action="{% url 'delete_proveedor' proveedor.id %}" method="POST" onsubmit="return confirmarBorrado();">
-    {% csrf_token %}
-    <button type="submit">Borrar</button>
-  </form>
-</ul>
+<main class="container">
+  <div class="row">
+    <div class="col text-center rounded bg-warning p-3">
+      <h1>Detalle Proveedor</h1>
+      <form action="{% url 'create_proveedor' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="nombre" class="form-label w-25 m-1">Nombre: </label>
+          <input type="text" class="form-control" id="nombre" value="{{proveedor.nombre}}" name="nombre">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="rut" class="form-label w-25 m-1">Rut:</label>
+          <input type="text" class="form-control" id="rut" value="{{proveedor.rut}}" name="rut">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="direccion" class="form-label w-25 m-1">Direccion:</label>
+          <input type="text" class="form-control" id="direccion" value="{{proveedor.direccion}}" name="direccion">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="rubro" class="form-label w-25 m-1">Rubro:</label>
+          <input type="text" class="form-control" id="rubro" value="{{proveedor.rubro}}" name="rubro">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="medioDePago" class="form-label w-25 m-1">Medio de pago:</label>
+          <input type="text" class="form-control" id="medioDePago" value="{{proveedor.medioDePago}}" name="medioDePago">
+        </div>
+        <button type="submit" class="btn btn-primary">Modificar Proveedor</button>
+      </form>
+      <form action="{% url 'delete_proveedor' proveedor.id %}" method="POST" onsubmit="return confirmarBorrado();">
+        {% csrf_token %}
+        <button class="btn btn-danger m-1 border border-dark" type="submit">Borrar</button>
+      </form>
+    </div>
+  </div>
+</main>
 <script>
   function confirmarBorrado() {
     if (confirm("¿Estás seguro de que deseas borrar este proveedor?")) {
@@ -20,5 +42,5 @@
       return false; // Cancelar la eliminación
     }
   }
-  </script>
+</script>
 {% endblock %}

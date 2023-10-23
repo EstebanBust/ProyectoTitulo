@@ -11,18 +11,49 @@
                         <li>Monto: {{flujo_de_caja.monto}}</li>
                         <li>Usuario: {{flujo_de_caja.usuario}}</li>
                     </ul>
-        
+
                 </a>
             </div>
         </div>
-        <div class="col">
+        <div class="col bg-dark text-light text-center p-3 rounded">
+            <h2>Ingresar nuevo movimiento</h2>
             <form method="POST" action="{% url 'crear_flujo_caja' %}">
                 {% csrf_token %}
-                {{form.as_p}}
-                <button type="submit">Buscar</button>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="concepto" class="form-label w-25 m-1">Concepto:</label>
+                    <input type="text" class="form-control" id="concepto" value="{{flujo_de_caja.concepto}}" name="concepto">
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="tipo_transaccion" class="form-label w-25 m-1">Tipo de transacción:</label>
+                    <select class="form-select" id="tipo_transaccion" name="tipo_transaccion">
+                        {% for choice in form.tipo_transaccion.field.choices %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == flujo_de_caja.tipo_transaccion %}selected{% endif %}>
+                                {{ choice.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="monto" class="form-label w-25 m-1">Monto:</label>
+                    <input type="text" class="form-control" id="monto" value="{{flujo_de_caja.monto}}" name="monto">
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="saldo_actual" class="form-label w-25 m-1">Saldo Actual:</label>
+                    <input type="text" class="form-control" id="saldo_actual" value="{{flujo_de_caja.saldo_actual}}" name="saldo_actual">
+                </div>
+                <button class="btn btn-primary" type="submit">Buscar</button>
             </form>
-
+            <form action="{% url 'borrar_flujo_caja' flujo_de_caja.id %}" method="POST" onsubmit="return confirmarBorrado"><button class="btn btn-danger border border-warning m-1">Borrar</button></form>
         </div>
     </div>
 </div>
+<script>
+    function confirmarBorrado() {
+      if (confirm("¿Estás seguro de que deseas borrar este proveedor?")) {
+        return true;  // Continuar con la eliminación
+      } else {
+        return false; // Cancelar la eliminación
+      }
+    }
+  </script>
 {% endblock %}

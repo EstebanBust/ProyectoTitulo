@@ -1,17 +1,51 @@
 {% extends 'base.html' %} {% block content%}
-<h1>Detalle Producto</h1>
-<ul>
-  <li><strong style="text-transform: uppercase;">{{producto.nombre}}</strong></li>
-  <form method='POST'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button >Editar</button>
-  </form>
-  <form action="{% url 'delete_producto' producto.id %}" method="POST" onsubmit="return confirmarBorrado();">
-    {% csrf_token %}
-    <button type="submit">Borrar</button>
-  </form>
-</ul>
+<main class="container">
+  <h1>Detalle Producto</h1>
+  <div class="row">
+    <div class="col text-center rounded bg-warning p-3">
+      <form action="{% url 'create_producto' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="nombre" class="form-label w-25 m-1">Nombre: </label>
+          <input type="text" class="form-control" id="nombre" value="{{producto.nombre}}" name="nombre">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="marca" class="form-label  w-25 m-1">Marca:</label>
+          <input type="text" class="form-control" id="marca" value="{{producto.marca}}" name="marca">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="tipo" class="form-label w-25 m-1">Tipo:</label>
+          <input type="text" class="form-control" id="tipo" value="{{producto.tipo}}" name="tipo">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="descripcion" class="form-label w-25 m-1">Descripcion:</label>
+          <textarea class="form-control" id="descripcion" value="{{producto.descripcion}}" name="descripcion" rows="5"
+            cols="20"></textarea>
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="cantidad" class="form-label w-25 m-1">Cantidad:</label>
+          <input type="number" class="form-control" id="cantidad" value="{{producto.cantidad}}" name="cantidad">
+        </div>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="proveedor" class="form-label w-25 m-1">Proveedor:</label>
+          <select id="proveedor" class="form-select" name="proveedor">
+            <option>--------</option>
+            {% for proveedor in proveedores %}
+            <option value="{{ proveedor.id }}" {% if producto.proveedor.id == proveedor.id %} selected {% endif %}>
+              {{ proveedor.nombre }}</option>
+
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Modificar Producto</button>
+      </form>
+      <form action="{% url 'delete_producto' producto.id %}" method="POST" onsubmit="return confirmarBorrado();">
+        {% csrf_token %}
+        <button class="btn btn-danger m-1 border border-dark" type="submit">Borrar</button>
+      </form>
+    </div>
+  </div>
+</main>
 <script>
   function confirmarBorrado() {
     if (confirm("¿Estás seguro de que deseas borrar este proveedor?")) {

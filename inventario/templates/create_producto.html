@@ -7,36 +7,37 @@
       <form action="{% url 'create_producto' %}" method="POST">
         {% csrf_token %}
         <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre: </label>
-          <input type="text" class="form-control" id="nombre">
+          <label for="nombre" class="form-label">Nombre:</label>
+          <input type="text" class="form-control" id="nombre" name="nombre">
         </div>
         <div class="mb-3">
           <label for="marca" class="form-label">Marca:</label>
-          <input type="text" class="form-control" id="marca">
+          <input type="text" class="form-control" id="marca" name="marca">
         </div>
         <div class="mb-3">
           <label for="tipo" class="form-label">Tipo:</label>
-          <input type="text" class="form-control" id="tipo" />
+          <input type="text" class="form-control" id="tipo" name="tipo">
         </div>
         <div class="mb-3">
           <label for="descripcion" class="form-label">Descripcion:</label>
-          <textarea class="form-control" id="descripcion" rows="5" cols="20"></textarea>
+          <textarea class="form-control" id="descripcion" name="descripcion" rows="5" cols="20"></textarea>
         </div>
         <div class="mb-3">
           <label for="cantidad" class="form-label">Cantidad:</label>
-          <input type="number" class="form-control" id="cantidad" />
+          <input type="number" class="form-control" id="cantidad" name="cantidad">
         </div>
         <div class="mb-3">
-          <label for="proveedor" class="form-label">Cantidad:</label>
-          <select id="proveedor" class="form-select">
+          <label for="proveedor" class="form-label">Proveedor:</label>
+          <select id="proveedor" class="form-select" name="proveedor">
             <option>--------</option>
             {% for proveedor in proveedores %}
             <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
             {% endfor %}
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+        <button type="submit" class="btn btn-primary">Guardar Producto</button>
       </form>
+
     </div>
   </div>
 </main>
