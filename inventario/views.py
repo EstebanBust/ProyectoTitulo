@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import CrearProvForm, CrearProductoForm, CrearClienteForm, FlujoCajaForm
 from .models import Producto, Proveedor, Cliente, FlujoCaja
-from django.db.models import Q
+from django.db.models import Q, Sum, F
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -165,7 +165,6 @@ def busca_cliente(request):
         return render(request, 'listaCliente.html', {'clientes': cliente})
 
 
-
 @login_required
 def mostrarProveedor(request, proveedor_id):
     proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
@@ -195,7 +194,6 @@ def mostrarProducto(request, producto_id):
     else:
         form = CrearProductoForm(instance=producto)
         proveedores = Proveedor.objects.all()
-
 
     return render(request, 'mostrarProducto.html', {'producto': producto, 'proveedores': proveedores})
 
@@ -244,6 +242,11 @@ def deleteCliente(request, cliente_id):
 def caja(request):
     flujo_de_caja = FlujoCaja.objects.all()
     saldo_actual = FlujoCaja.objects.last()
+    ingresos = FlujoCaja.objects.filter(
+        tipo_transaccion='Ingreso').aggregate(total_ingresos=Sum('monto'))
+    egresos = FlujoCaja.objects.filter(tipo_transaccion='Egreso').aggregate(
+        total_egresos=Sum(F('monto') * -1))
+    saldo = ingresos['total_ingresos'] + egresos['total_egresos']
 
     if request.method == 'POST':
         form = FlujoCajaForm(request.POST)
@@ -254,14 +257,17 @@ def caja(request):
     else:
         form = FlujoCajaForm()
 
-    return render(request, 'flujo_de_caja.html', {'flujo_de_cajas': flujo_de_caja, 'form': form, 'saldo_actual': saldo_actual})
+    return render(request, 'flujo_de_caja.html', {'flujo_de_cajas': flujo_de_caja, 'form': form, 'saldo_actual': saldo_actual, 'saldo': saldo})
 
 
+@login_required
 def detalle_caja(request, caja_id):
     flujo_de_caja = FlujoCaja.objects.get(id=caja_id)
     form = FlujoCajaForm()
-    return render(request, 'detalle_caja.html', {'flujo_de_caja': flujo_de_caja,'form':form})
+    return render(request, 'detalle_caja.html', {'flujo_de_caja': flujo_de_caja, 'form': form})
 
+
+@login_required
 def modificar_caja(request, caja_id):
     if request.method == 'POST':
         form = FlujoCajaForm(request.POST, instance=caja_id)
@@ -270,9 +276,11 @@ def modificar_caja(request, caja_id):
 
     return redirect('caja')
 
+
+@login_required
 def borrarCaja(request, caja_id):
     caja = get_object_or_404(FlujoCaja, pk=caja_id)
     if request.method == 'POST':
         caja.delete()
-    
+
     return redirect('caja')
