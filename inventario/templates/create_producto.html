@@ -3,31 +3,31 @@
   <h1>Crear Producto</h1>
   {{error}}
   <div class="row">
-    <div class="col bg-warning p-3 rounded">
+    <div class="col bg-warning p-3 rounded text-center">
       <form action="{% url 'create_producto' %}" method="POST">
         {% csrf_token %}
-        <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre:</label>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="nombre" class="form-label w-25 m-1">Nombre:</label>
           <input type="text" class="form-control" id="nombre" name="nombre">
         </div>
-        <div class="mb-3">
-          <label for="marca" class="form-label">Marca:</label>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="marca" class="form-label w-25 m-1">Marca:</label>
           <input type="text" class="form-control" id="marca" name="marca">
         </div>
-        <div class="mb-3">
-          <label for="tipo" class="form-label">Tipo:</label>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="tipo" class="form-label w-25 m-1">Tipo:</label>
           <input type="text" class="form-control" id="tipo" name="tipo">
         </div>
-        <div class="mb-3">
-          <label for="descripcion" class="form-label">Descripcion:</label>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="descripcion" class="form-label w-25 m-1">Descripcion:</label>
           <textarea class="form-control" id="descripcion" name="descripcion" rows="5" cols="20"></textarea>
         </div>
-        <div class="mb-3">
-          <label for="cantidad" class="form-label">Cantidad:</label>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="cantidad" class="form-label w-25 m-1">Cantidad:</label>
           <input type="number" class="form-control" id="cantidad" name="cantidad">
         </div>
-        <div class="mb-3">
-          <label for="proveedor" class="form-label">Proveedor:</label>
+        <div class="mb-3 d-flex justify-content-between">
+          <label for="proveedor" class="form-label m-1 w-25">Proveedor:</label>
           <select id="proveedor" class="form-select" name="proveedor">
             <option>--------</option>
             {% for proveedor in proveedores %}

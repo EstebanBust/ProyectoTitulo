@@ -43,4 +43,6 @@ urlpatterns = [
     path('caja/crear_flujo_de_caja', views.caja, name='crear_flujo_caja'),
     path('caja/modificar_flujo_de_caja/<int:caja_id>', views.modificar_caja, name='modificar_flujo_caja'),
     path('caja/borrar_Flujo_de_caja/<int:caja_id>', views.borrarCaja, name='borrar_flujo_caja'),
+    path('ventas/', views.borrarCaja, name='venta'),
+    path('compras/', views.borrarCaja, name='compra'),
 ]

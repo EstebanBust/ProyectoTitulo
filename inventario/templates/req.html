@@ -21,6 +21,13 @@
         <a class="dropdown-item" href="{% url 'busca_cliente' %}">Buscar Cliente</a>
       </div>
     </li>
+    <li class="nav-dropdown">
+      <div class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">Compras / Vengas</div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'compra' %}">Compras</a>
+        <a class="dropdown-item" href="{% url 'venta' %}">Ventas</a>
+    </li>
   </ul>
 </div>
 {% endblock %}
