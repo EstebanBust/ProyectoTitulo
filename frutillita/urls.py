@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from inventario import views
+from comprasVentas.views import compra, venta
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,6 +44,6 @@ urlpatterns = [
     path('caja/crear_flujo_de_caja', views.caja, name='crear_flujo_caja'),
     path('caja/modificar_flujo_de_caja/<int:caja_id>', views.modificar_caja, name='modificar_flujo_caja'),
     path('caja/borrar_Flujo_de_caja/<int:caja_id>', views.borrarCaja, name='borrar_flujo_caja'),
-    path('ventas/', views.borrarCaja, name='venta'),
-    path('compras/', views.borrarCaja, name='compra'),
+    path('ventas/', venta, name='venta'),
+    path('compras/', compra, name='compra'),
 ]

@@ -1,5 +1,98 @@
 {% extends 'base.html' %} {% block content%}
 <main class="container">
-    <form action="/" method="POST"></form>
+    <div class="row">
+        <div class="col">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Total venta</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for venta in detalleVentas %}
+                    <tr>
+                        <th scope="row">{{venta.id}}</th>
+                        <td>{{venta.producto.nombre}}</td>
+                        <td>{{venta.venta.cliente}} </td>
+                        <td>{{venta.venta.total}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <div class="col bg-warning rounded">
+            <form action="{% url 'venta' %}" method="POST">
+                {% csrf_token %}
+                <div class="m-2 d-flex justify-content-between">
+                    <label for="fecha" class="form-label w-25 m-1">Fecha:</label>
+                    <input class="form-control" type="date" name="fecha" id="fecha">
+
+                </div>
+                <div class="m-2 d-flex justify-content-between">
+                    <label for="cliente" class="form-label m-1 w-25">Cliente:</label>
+                    <select id="cliente" class="form-select" name="cliente">
+                        <option>--------</option>
+                        {% for client in cliente %}
+                        <option value="{{ client.id }}">{{ client.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="m-2 d-flex justify-content-between">
+                    <label for="producto" class="form-label m-1 w-25">Producto:</label>
+                    <select id="producto" class="form-select" name="producto" onchange="actualizarPrecioUnitario(this)">
+                        <option>--------</option>
+                        {% for product in producto %}
+                        <option value="{{ product.id }}" data-precio="{{ product.precio }}">{{ product.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="m-2 d-flex justify-content-between">
+                    <label for="cantidad" class="form-label w-25 m-1">Cantidad:</label>
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" value="">
+                </div>
+                <div class="m-2 d-flex justify-content-between">
+                    <label for="precioUnitario" class="form-label w-25 m-1">Precio unitario:</label>
+                    <input type="number" class="form-control" id="precioUnitario" name="precioUnitario" value=""
+                        readonly>
+                </div>
+                <div class="m-2 d-flex justify-content-between">
+                    <label for="total" class="form-label w-25 m-1">Precio total:</label>
+                    <input type="number" class="form-control" id="total" name="total" value="" readonly>
+                </div>
+                <div class="m-2 d-flex justify-content-between">
+                    <button class="btn btn-success">Ingresar venta</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
+<script>
+    function actualizarPrecioUnitario(select) {
+        const selectedOption = select.options[select.selectedIndex];
+        const precioUnitario = selectedOption.getAttribute("data-precio");
+        const precioUnitarioField = document.getElementById("precioUnitario");
+        precioUnitarioField.value = precioUnitario;
+    }
+
+    function calcularTotal() {
+        const cantidad = parseFloat(document.getElementById("cantidad").value);
+        const precioUnitario = parseFloat(document.getElementById("precioUnitario").value);
+        if (!isNaN(cantidad) && !isNaN(precioUnitario)) {
+            const total = cantidad * precioUnitario;
+            document.getElementById("total").value = total.toFixed(2);
+        } else {
+            document.getElementById("total").value = "";
+        }
+    }
+    // Escucha cambios en la cantidad y el precio unitario para calcular el total
+    document.getElementById("cantidad").addEventListener("input", calcularTotal);
+    document.getElementById("precioUnitario").addEventListener("input", calcularTotal);
+</script>
+
+
 {% endblock %}

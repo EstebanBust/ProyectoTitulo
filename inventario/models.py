@@ -23,6 +23,7 @@ class Producto(models.Model):
     descripcion = models.TextField(blank=True)
     cantidad = models.IntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    precio = models.IntegerField(blank=True)
 
     def __str__(self):
         return self.nombre
