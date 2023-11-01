@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-4 offset-md-4">
       <h1>Registrar Usuario</h1>
-      <form action="/signup/" method="POST" class="card card-body bg-primary">
+      <form action="/signup/" method="POST" class="card card-body bg-primary" id="registroForm">
         {{error}} {% csrf_token %}
         <div class="mb-3">
           <label for="username">Nombre de usuario:</label>
@@ -26,6 +26,21 @@
         </div>
         <button class="btn btn-secondary">Signup</button>
       </form>
+
+      <script>
+        // Agrega un controlador de eventos para el envío del formulario
+        document.getElementById("registroForm").addEventListener("submit", function (event) {
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password1 = document.getElementById("password1").value;
+          const password2 = document.getElementById("password2").value;
+
+          if (!username || !email || !password1 || !password2) {
+            alert("Por favor, complete todos los campos del formulario.");
+            event.preventDefault(); // Evita que el formulario se envíe si hay campos vacíos
+          }
+        });
+      </script>
     </div>
   </div>
 </main>
