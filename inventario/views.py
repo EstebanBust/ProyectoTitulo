@@ -11,9 +11,9 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 def crearSuperUser(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    email = request.POST['email']
+    username = 'admin'
+    password = 'superadmin12'
+    email = 'esteban.bustamante.c@gmail.com'
     # Crea un superusuario
     user = User.objects.create_superuser(username=username, password=password, email=email)
     # Puedes realizar otras acciones o redirigir a otra página aquí
