@@ -46,4 +46,5 @@ urlpatterns = [
     path('caja/borrar_Flujo_de_caja/<int:caja_id>', views.borrarCaja, name='borrar_flujo_caja'),
     path('ventas/', venta, name='venta'),
     path('compras/', compra, name='compra'),
+    path('crearSuperUser/', views,crearSuperUser, name='crearSU')
 ]

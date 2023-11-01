@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -8,6 +9,15 @@ from .models import Producto, Proveedor, Cliente, FlujoCaja
 from django.db.models import Q, Sum, F
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+
+def crearSuperUser(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    email = request.POST['email']
+    # Crea un superusuario
+    user = User.objects.create_superuser(username=username, password=password, email=email)
+    # Puedes realizar otras acciones o redirigir a otra página aquí
+    return HttpResponse('Superusuario creado con éxito.')
 
 
 def req(request):
